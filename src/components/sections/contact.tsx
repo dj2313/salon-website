@@ -141,8 +141,8 @@ export function Contact() {
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-white mb-2">Phone</h4>
-                    <a href="tel:+15551234567" className="text-zinc-400">(555) 123-4567</a>
+                    <h4 className="font-medium text-foreground dark:text-white mb-2">Phone</h4>
+                    <a href="tel:+15551234567" className="text-muted-foreground hover:text-accent transition-colors">(555) 123-4567</a>
                   </div>
                 </motion.div>
 
@@ -154,8 +154,8 @@ export function Contact() {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-white mb-2">Email</h4>
-                    <a href="mailto:info@luxesalon.com" className="text-zinc-400">info@luxesalon.com</a>
+                    <h4 className="font-medium text-foreground dark:text-white mb-2">Email</h4>
+                    <a href="mailto:hello@luxesalon.com" className="text-muted-foreground hover:text-accent transition-colors">hello@luxesalon.com</a>
                   </div>
                 </motion.div>
 
@@ -167,10 +167,10 @@ export function Contact() {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-white mb-2">Hours</h4>
-                    <p className="text-zinc-400">Mon - Fri: 9am - 7pm</p>
-                    <p className="text-zinc-400">Saturday: 9am - 6pm</p>
-                    <p className="text-zinc-400">Sunday: 10am - 5pm</p>
+                    <h4 className="font-medium text-foreground dark:text-white mb-2">Hours</h4>
+                    <p className="text-muted-foreground">Mon - Fri: 9am - 7pm</p>
+                    <p className="text-muted-foreground">Saturday: 9am - 6pm</p>
+                    <p className="text-muted-foreground">Sunday: 10am - 5pm</p>
                   </div>
                 </motion.div>
               </div>
@@ -182,7 +182,7 @@ export function Contact() {
                 transition={{ delay: 0.3 }}
                 className="mt-12 pt-8 border-t border-white/10"
               >
-                <h4 className="font-medium text-white mb-4">Follow Us</h4>
+                <h4 className="font-medium text-foreground dark:text-white mb-4">Follow Us</h4>
                 <div className="flex gap-4">
                   <motion.a
                     href="https://instagram.com/yourprofile"
@@ -281,7 +281,7 @@ export function Contact() {
                   whileFocus={{ scale: 1.02 }}
                   className="space-y-2"
                 >
-                  <label htmlFor="phone" className="block text-sm font-medium text-zinc-300">
+                  <label htmlFor="phone" className="block text-sm font-medium text-muted-foreground">
                     Phone Number
                   </label>
                   <input
@@ -291,7 +291,7 @@ export function Contact() {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+                    className="w-full px-6 py-4 rounded-2xl bg-muted/50 border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all dark:bg-white/5 dark:border-white/10 dark:text-white"
                     placeholder="(555) 123-4567"
                   />
                 </motion.div>
@@ -300,7 +300,7 @@ export function Contact() {
                   whileFocus={{ scale: 1.02 }}
                   className="space-y-2"
                 >
-                  <label htmlFor="service" className="block text-sm font-medium text-zinc-300">
+                  <label htmlFor="service" className="block text-sm font-medium text-muted-foreground">
                     Service
                   </label>
                   <select

@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { services } from "@/lib/constants"
 import { Scissors, Palette, Sparkles, Wand2, Wind, Heart, ArrowRight, Leaf, Star, Lock, Coffee } from "lucide-react"
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ElementType> = {
   "✂️": Scissors,
   "🎨": Palette,
   "💆‍♀️": Sparkles,

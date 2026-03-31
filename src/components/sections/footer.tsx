@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Instagram, Facebook, ArrowRight } from "lucide-react"
+import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react"
 
 export function Footer() {
   const [email, setEmail] = useState("")

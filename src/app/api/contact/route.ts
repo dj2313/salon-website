@@ -69,6 +69,6 @@ export async function POST(request: NextRequest) {
 }
 
 // Enable CORS for the contact endpoint if needed
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS(_request: NextRequest) {
   return NextResponse.json({}, { status: 200 })
 }
