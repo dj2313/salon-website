@@ -1,9 +1,56 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 export function Footer() {
+  const [email, setEmail] = useState("")
+  const [newsletterStatus, setNewsletterStatus] = useState<{
+    type: "success" | "error" | null
+    message: string
+  }>({ type: null, message: "" })
+  const [isSubscribing, setIsSubscribing] = useState(false)
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubscribing(true)
+    setNewsletterStatus({ type: null, message: "" })
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setNewsletterStatus({
+          type: "success",
+          message: result.message || "Thank you for subscribing!",
+        })
+        setEmail("")
+      } else {
+        setNewsletterStatus({
+          type: "error",
+          message: result.error || "Failed to subscribe. Please try again.",
+        })
+      }
+    } catch (error) {
+      console.error("Newsletter error:", error)
+      setNewsletterStatus({
+        type: "error",
+        message: "Failed to subscribe. Please try again later.",
+      })
+    } finally {
+      setIsSubscribing(false)
+    }
+  }
   return (
     <footer className="relative bg-background pt-24 pb-12 overflow-hidden border-t border-border">
       {/* Decorative background gradients for visibility */}
@@ -20,14 +67,22 @@ export function Footer() {
               Crafting beauty through artistry and innovation. Our mission is to provide an unparalleled luxury experience for every client.
             </p>
             <div className="flex items-center gap-4">
-              {['Instagram', 'Facebook', 'Twitter'].map((social) => (
+              {[
+                { name: 'Instagram', url: 'https://instagram.com' },
+                { name: 'Facebook', url: 'https://facebook.com' },
+                { name: 'Twitter', url: 'https://twitter.com' }
+              ].map((social) => (
                 <motion.a
-                  key={social}
-                  href="#"
+
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.1 }}
                   className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-all duration-300"
+                  aria-label={social.name}
                 >
-                  <span className="sr-only">{social}</span>
+                  <span className="sr-only">{social.name}</span>
                   <div className="w-5 h-5 bg-current rounded-sm opacity-20" />
                 </motion.a>
               ))}
@@ -71,16 +126,40 @@ export function Footer() {
           <div className="space-y-6">
             <h4 className="font-display text-xl font-semibold tracking-wide">Newsletter</h4>
             <p className="text-muted-foreground font-light">Join our exclusive list for beauty tips and private offers.</p>
-            <div className="relative group">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
-                className="w-full bg-muted/50 border border-border rounded-full py-4 pl-6 pr-12 text-sm focus:outline-none focus:border-accent/50 transition-colors"
-              />
-              <button className="absolute right-2 top-2 bottom-2 bg-foreground text-background px-4 rounded-full hover:opacity-90 transition-opacity">
-                <span className="text-xs font-bold uppercase tracking-widest">Join</span>
-              </button>
-            </div>
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div className="relative group">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  required
+                  disabled={isSubscribing}
+                  className="w-full bg-muted/50 border border-border rounded-full py-4 pl-6 pr-12 text-sm focus:outline-none focus:border-accent/50 transition-colors disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubscribing}
+                  className="absolute right-2 top-2 bottom-2 bg-foreground text-background px-4 rounded-full hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span className="text-xs font-bold uppercase tracking-widest">
+                    {isSubscribing ? "..." : "Join"}
+                  </span>
+                </button>
+              </div>
+              {newsletterStatus.type && (
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`text-xs ${newsletterStatus.type === "success"
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-red-600 dark:text-red-400"
+                    }`}
+                >
+                  {newsletterStatus.message}
+                </motion.p>
+              )}
+            </form>
           </div>
         </div>
 
@@ -91,6 +170,11 @@ export function Footer() {
           <div className="flex items-center gap-8 text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
             <Link href="#" className="hover:text-accent transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-accent transition-colors">Terms of Service</Link>
+            <div className="flex items-center gap-4 mt-4">
+              <motion.a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" whileHover={{ y: -3, scale: 1.1 }} className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-all duration-300" aria-label="Instagram">
+                <Image src="/images/Instagram_black.svg" alt="Instagram" width={24} height={24} />
+              </motion.a>
+            </div>
           </div>
         </div>
       </div>
