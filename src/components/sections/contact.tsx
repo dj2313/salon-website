@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { Mail, Phone, MapPin, Clock, Send } from "lucide-react"
@@ -13,12 +14,49 @@ export function Contact() {
     service: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null
+    message: string
+  }>({ type: null, message: "" })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    alert("Thank you for your request! We'll contact you soon.")
-    setFormData({ name: "", email: "", phone: "", service: "", message: "" })
+    setIsSubmitting(true)
+    setSubmitStatus({ type: null, message: "" })
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message: result.message || "Thank you for your request! We'll contact you soon.",
+        })
+        setFormData({ name: "", email: "", phone: "", service: "", message: "" })
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: result.error || "Failed to submit form. Please try again.",
+        })
+      }
+    } catch (error) {
+      console.error("Form submission error:", error)
+      setSubmitStatus({
+        type: "error",
+        message: "Failed to submit form. Please try again later.",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -86,11 +124,13 @@ export function Contact() {
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-beauty-pink flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <h4 className="font-medium text-foreground dark:text-white mb-2">Location</h4>
-                    <p className="text-muted-foreground">123 Elegant Avenue</p>
-                    <p className="text-muted-foreground">Downtown District, NY 10001</p>
-                  </div>
+                  <a href="https://www.google.com/maps/search/?api=1&query=123+Elegant+Avenue,+Downtown+District,+NY+10001" target="_blank" rel="noopener noreferrer">
+                    <div>
+                      <h4 className="font-medium text-foreground dark:text-white mb-2">Location</h4>
+                      <p className="text-muted-foreground">123 Elegant Avenue</p>
+                      <p className="text-muted-foreground">Downtown District, NY 10001</p>
+                    </div>
+                  </a>
                 </motion.div>
 
                 <motion.div
@@ -102,7 +142,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-white mb-2">Phone</h4>
-                    <p className="text-zinc-400">(555) 123-4567</p>
+                    <a href="tel:+15551234567" className="text-zinc-400">(555) 123-4567</a>
                   </div>
                 </motion.div>
 
@@ -115,7 +155,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-white mb-2">Email</h4>
-                    <p className="text-zinc-400">info@luxesalon.com</p>
+                    <a href="mailto:info@luxesalon.com" className="text-zinc-400">info@luxesalon.com</a>
                   </div>
                 </motion.div>
 
@@ -144,16 +184,31 @@ export function Contact() {
               >
                 <h4 className="font-medium text-white mb-4">Follow Us</h4>
                 <div className="flex gap-4">
-                  {["Instagram", "Facebook", "Pinterest"].map((social, index) => (
-                    <motion.a
-                      key={social}
-                      href="#"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent/20 flex items-center justify-center transition-colors"
-                    >
-                      <span className="text-xs text-zinc-400 hover:text-white">{social[0]}</span>
-                    </motion.a>
-                  ))}
+                  <motion.a
+                    href="https://instagram.com/yourprofile"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent/20 flex items-center justify-center transition-colors"
+                  >
+                    <Image src="/images/Instagram_black.svg" alt="Instagram" width={24} height={24} className="text-zinc-400 hover:text-white" />
+                  </motion.a>
+
+                  <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent/20 flex items-center justify-center transition-colors"
+                  >
+                    <span className="text-xs text-zinc-400 hover:text-white">F</span>
+                  </motion.a>
+
+                  <motion.a
+                    href="#"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent/20 flex items-center justify-center transition-colors"
+                  >
+                    <span className="text-xs text-zinc-400 hover:text-white">P</span>
+                  </motion.a>
                 </div>
               </motion.div>
             </motion.div>
@@ -168,6 +223,19 @@ export function Contact() {
               onSubmit={handleSubmit}
               className="space-y-6"
             >
+              {/* Status Messages */}
+              {submitStatus.type && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`p-4 rounded-2xl ${submitStatus.type === "success"
+                      ? "bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400"
+                      : "bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400"
+                    }`}
+                >
+                  {submitStatus.message}
+                </motion.div>
+              )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <motion.div
                   whileFocus={{ scale: 1.02 }}
@@ -290,10 +358,24 @@ export function Contact() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="group w-full bg-gradient-to-r from-accent to-beauty-pink text-white py-5 rounded-2xl font-medium text-lg flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(202,138,4,0.5)] transition-all"
+                disabled={isSubmitting}
+                className="group w-full bg-gradient-to-r from-accent to-beauty-pink text-white py-5 rounded-2xl font-medium text-lg flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(202,138,4,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                Request Appointment
+                {isSubmitting ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    Request Appointment
+                  </>
+                )}
               </motion.button>
             </motion.form>
           </ScrollReveal>

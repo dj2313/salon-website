@@ -1,118 +1,164 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { services } from "@/lib/constants"
+import { Scissors, Palette, Sparkles, Wand2, Wind, Heart, ArrowRight, Leaf, Star, Lock, Coffee } from "lucide-react"
+
+const iconMap: Record<string, any> = {
+  "✂️": Scissors,
+  "🎨": Palette,
+  "💆‍♀️": Sparkles,
+  "💄": Wand2,
+  "💨": Wind,
+  "💍": Heart,
+}
 
 export function Services() {
-  return (
-    <section id="services" className="py-32 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-1/4 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-beauty-pink/5 rounded-full blur-3xl" />
+  const { scrollYProgress } = useScroll();
+  const xTranslate = useTransform(scrollYProgress, [0.1, 0.5], [200, -400]);
+  const opacityHeader = useTransform(scrollYProgress, [0, 0.2], [1, 0.2]);
 
-      <div className="section-container">
+  return (
+    <section id="services" className="py-32 md:py-48 bg-background dark:bg-black relative overflow-hidden transition-colors duration-1000">
+      {/* Immersive background text */}
+      <motion.div
+        style={{ x: xTranslate, opacity: 0.03 }}
+        className="absolute top-1/4 left-0 text-[12rem] md:text-[20rem] font-bold text-foreground dark:text-white whitespace-nowrap pointer-events-none select-none tracking-[0.1em] font-display"
+      >
+        CURATED EXCELLENCE ARTISTRY
+      </motion.div>
+
+      {/* Modern background accents */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] mix-blend-multiply dark:mix-blend-screen pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-beauty-pink/5 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
+
+      <div className="section-container relative z-10">
         <ScrollReveal>
-          <div className="section-header">
-            <motion.p
+          <motion.div style={{ opacity: opacityHeader }} className="section-header !mb-32 text-left md:text-center">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="section-tag"
+              className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-accent/5 border border-accent/20 backdrop-blur-sm self-start md:self-center"
             >
-              Our Services
-            </motion.p>
+              <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              <span className="text-accent font-medium text-[10px] uppercase tracking-[0.4em]">The Luxe Experience</span>
+            </motion.div>
+
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="section-title"
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="section-title !text-left md:!text-center lg:text-7xl xl:text-8xl"
             >
-              Tailored Experiences for
+              Our Masterful
               <br />
-              <span className="text-gradient-aurora">Every Beauty Need</span>
+              <span className="text-gradient-aurora italic font-light">Artistry & Care</span>
             </motion.h2>
+
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="section-description"
+              transition={{ delay: 0.4, duration: 1 }}
+              className="section-description !text-left md:!text-center !text-muted-foreground/80 max-w-2xl pt-8 leading-relaxed"
             >
-              From precision cuts to stunning color transformations, our comprehensive range of services is designed to enhance your natural beauty with artistry and care.
+              Discover a sanctuary where innovation meets relaxation. Our bespoke services are designed to enhance your natural beauty while providing a moment of profound tranquility.
             </motion.p>
-          </div>
+          </motion.div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-          {services.map((service, index) => (
-            <ScrollReveal key={service.id} delay={index * 0.1}>
-              <motion.div
-                whileHover={{ y: -15, scale: 1.02 }}
-                className="card-modern group cursor-pointer relative overflow-hidden"
-              >
-                {/* Gradient overlay on hover */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {services.map((service, index) => {
+            const Icon = iconMap[service.icon as string] || Scissors;
+            return (
+              <ScrollReveal key={service.id} delay={index * 0.1}>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-accent/10 to-beauty-pink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={false}
-                />
-
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="relative z-10"
+                  whileHover={{ y: -10 }}
+                  className="group relative h-full flex flex-col p-10 rounded-[3rem] bg-white/[0.02] dark:bg-zinc-900/40 border border-white/10 dark:border-white/[0.05] hover:border-accent/40 hover:bg-white/[0.05] dark:hover:bg-zinc-800/60 transition-all duration-700 backdrop-blur-3xl overflow-hidden shadow-elegant"
                 >
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent to-beauty-pink flex items-center justify-center mb-8 shadow-gold group-hover:shadow-lg transition-all duration-500">
-                    <span className="text-3xl">✨</span>
+                  {/* Subtle Gradient Glow Background */}
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                  
+                  {/* Category & Icon */}
+                  <div className="flex justify-between items-start mb-12 relative z-10">
+                    <div className="p-4 rounded-2xl bg-accent/5 border border-accent/10 group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-500 group-hover:animate-float">
+                      <Icon aria-hidden="true" className="w-7 h-7 text-accent group-hover:scale-110 transition-transform duration-500" strokeWidth={1.2} />
+                    </div>
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-foreground font-semibold group-hover:text-accent group-hover:tracking-[0.35em] transition-all duration-500">
+                      {service.category}
+                    </span>
                   </div>
-                </motion.div>
 
-                <div className="relative z-10">
-                  <h3 className="font-display text-2xl md:text-3xl font-semibold mb-4 group-hover:text-gradient-gold transition-all duration-500">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-border">
-                    <p className="font-semibold text-xl text-accent">{service.price}</p>
-                    <motion.div
-                      className="w-10 h-10 rounded-full bg-muted flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-accent group-hover:to-beauty-pink transition-all duration-500 dark:bg-zinc-800"
-                      whileHover={{ x: 5 }}
-                    >
-                      <svg
-                        className="w-5 h-5 text-muted-foreground group-hover:text-white transition-colors"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </motion.div>
+                  {/* Content */}
+                  <div className="space-y-4 relative z-10">
+                    <h3 className="font-display text-4xl font-semibold text-foreground dark:text-white leading-tight">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground/80 font-light leading-relaxed text-lg line-clamp-3 group-hover:text-muted-foreground transition-colors duration-500">
+                      {service.description}
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            </ScrollReveal>
-          ))}
+
+                  {/* Footer */}
+                  <div className="mt-auto pt-12 flex items-end justify-between relative z-10">
+                    <div className="space-y-1">
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground/40 font-bold">Investment</span>
+                      <p className="font-display text-3xl font-bold tracking-tight text-accent">
+                        {service.price}
+                      </p>
+                    </div>
+
+                    <button
+                      className="group/btn flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground dark:text-white hover:text-accent transition-colors"
+                    >
+                      <span className="relative">
+                        Explore
+                        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent group-hover/btn:w-full transition-all duration-500" />
+                      </span>
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                  
+                  {/* Decorative corner accent */}
+                  <div className="absolute top-4 right-4 w-12 h-12 border-t border-r border-accent/0 group-hover:border-accent/20 rounded-tr-2xl transition-all duration-700" />
+                </motion.div>
+              </ScrollReveal>
+            )
+          })}
         </div>
 
-        {/* Call to action */}
-        <ScrollReveal delay={0.6}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-20"
-          >
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block btn-gradient-gold text-white px-12 py-5 rounded-full font-medium text-lg shadow-elegant"
-            >
-              Book Your Service
-            </motion.a>
-          </motion.div>
+        {/* Improved Feature Highlights Grid */}
+        <ScrollReveal delay={0.3}>
+          <div className="mt-32 md:mt-48 relative p-12 md:p-16 rounded-[4rem] overflow-hidden border border-white/10 shadow-2xl">
+            {/* Background Texture */}
+            <div className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.01] backdrop-blur-3xl animate-pulse-soft" />
+            
+            <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
+              {[
+                { label: "Eco-Friendly Products", icon: Leaf, value: "Sustainable Philosophy" },
+                { label: "Master Stylists", icon: Star, value: "Decade of Experience" },
+                { label: "Private Appointments", icon: Lock, value: "Absolute Discretion" },
+                { label: "Signature Drinks", icon: Coffee, value: "Relaxation Rituals" },
+              ].map((feature, i) => (
+                <div key={i} className="flex flex-col items-center md:items-start text-center md:text-left space-y-5 group cursor-default">
+                  <div className="p-4 rounded-full bg-accent/5 border border-accent/10 group-hover:bg-accent/10 group-hover:scale-110 transition-all duration-500">
+                    <feature.icon className="w-8 h-8 text-accent/80" strokeWidth={1} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent">
+                      {feature.label}
+                    </h4>
+                    <p className="text-muted-foreground/60 text-xs font-light">
+                      {feature.value}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </ScrollReveal>
       </div>
     </section>
