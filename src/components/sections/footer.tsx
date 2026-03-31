@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import Image from "next/image"
+import { Mail, Phone, MapPin, Instagram, Facebook, ArrowRight } from "lucide-react"
 
 export function Footer() {
   const [email, setEmail] = useState("")
@@ -51,6 +51,7 @@ export function Footer() {
       setIsSubscribing(false)
     }
   }
+
   return (
     <footer className="relative bg-background pt-24 pb-12 overflow-hidden border-t border-border">
       {/* Decorative background gradients for visibility */}
@@ -66,31 +67,10 @@ export function Footer() {
             <p className="text-muted-foreground text-lg leading-relaxed max-w-xs font-light">
               Crafting beauty through artistry and innovation. Our mission is to provide an unparalleled luxury experience for every client.
             </p>
-            <div className="flex items-center gap-4">
-              {[
-                { name: 'Instagram', url: 'https://instagram.com' },
-                { name: 'Facebook', url: 'https://facebook.com' },
-                { name: 'Twitter', url: 'https://twitter.com' }
-              ].map((social) => (
-                <motion.a
-
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-all duration-300"
-                  aria-label={social.name}
-                >
-                  <span className="sr-only">{social.name}</span>
-                  <div className="w-5 h-5 bg-current rounded-sm opacity-20" />
-                </motion.a>
-              ))}
-            </div>
           </div>
 
           <div className="space-y-6">
-            <h4 className="font-display text-xl font-semibold tracking-wide">Quick Links</h4>
+            <h4 className="font-display text-xl font-semibold tracking-wide text-foreground">Quick Links</h4>
             <ul className="space-y-4">
               <li><Link href="#about" className="text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-accent scale-0 group-hover:scale-100 transition-transform" />About Our Studio</Link></li>
               <li><Link href="#services" className="text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-accent scale-0 group-hover:scale-100 transition-transform" />Premium Services</Link></li>
@@ -100,31 +80,48 @@ export function Footer() {
           </div>
 
           <div className="space-y-6">
-            <h4 className="font-display text-xl font-semibold tracking-wide">Contact Us</h4>
+            <h4 className="font-display text-xl font-semibold tracking-wide text-foreground">Contact Us</h4>
             <ul className="space-y-5 text-muted-foreground">
-              <li className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-0.5">
-                  <span className="text-[10px]">📍</span>
+              <li className="flex items-start gap-4 group">
+                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0 mt-0.5 group-hover:bg-accent/20 transition-colors">
+                  <MapPin className="w-4 h-4" />
                 </div>
-                <span>123 Elegant Avenue,<br />Luxury District, NY 10001</span>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=123+Elegant+Avenue,+Luxury+District,+NY+10001"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-accent transition-colors"
+                >
+                  123 Elegant Avenue,<br />Luxury District, NY 10001
+                </a>
               </li>
-              <li className="flex items-center gap-4">
-                <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
-                  <span className="text-[10px]">📞</span>
+              <li className="flex items-center gap-4 group">
+                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:bg-accent/20 transition-colors">
+                  <Phone className="w-4 h-4" />
                 </div>
-                <span>(555) 123-4567</span>
+                <a
+                  href="tel:+15551234567"
+                  className="hover:text-accent transition-colors"
+                >
+                  (555) 123-4567
+                </a>
               </li>
-              <li className="flex items-center gap-4">
-                <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
-                  <span className="text-[10px]">✉️</span>
+              <li className="flex items-center gap-4 group">
+                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:bg-accent/20 transition-colors">
+                  <Mail className="w-4 h-4" />
                 </div>
-                <span>hello@luxesalon.com</span>
+                <a
+                  href="mailto:hello@luxesalon.com"
+                  className="hover:text-accent transition-colors"
+                >
+                  hello@luxesalon.com
+                </a>
               </li>
             </ul>
           </div>
 
           <div className="space-y-6">
-            <h4 className="font-display text-xl font-semibold tracking-wide">Newsletter</h4>
+            <h4 className="font-display text-xl font-semibold tracking-wide text-foreground">Newsletter</h4>
             <p className="text-muted-foreground font-light">Join our exclusive list for beauty tips and private offers.</p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-3">
               <div className="relative group">
@@ -135,7 +132,7 @@ export function Footer() {
                   placeholder="Your email address"
                   required
                   disabled={isSubscribing}
-                  className="w-full bg-muted/50 border border-border rounded-full py-4 pl-6 pr-12 text-sm focus:outline-none focus:border-accent/50 transition-colors disabled:opacity-50"
+                  className="w-full bg-muted/50 border border-border rounded-full py-4 pl-6 pr-12 text-sm text-foreground focus:outline-none focus:border-accent/50 transition-colors disabled:opacity-50"
                 />
                 <button
                   type="submit"
@@ -170,9 +167,26 @@ export function Footer() {
           <div className="flex items-center gap-8 text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
             <Link href="#" className="hover:text-accent transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-accent transition-colors">Terms of Service</Link>
-            <div className="flex items-center gap-4 mt-4">
-              <motion.a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" whileHover={{ y: -3, scale: 1.1 }} className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-all duration-300" aria-label="Instagram">
-                <Image src="/images/Instagram_black.svg" alt="Instagram" width={24} height={24} />
+            <div className="flex items-center gap-3">
+              <motion.a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, scale: 1.1 }}
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </motion.a>
+              <motion.a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, scale: 1.1 }}
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-all duration-300"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
               </motion.a>
             </div>
           </div>

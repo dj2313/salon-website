@@ -63,6 +63,8 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { MotionProvider } from '@/components/motion-provider';
+import { SmoothScrollProvider } from '@/components/smooth-scroll-provider';
+import { ScrollProgressBar } from '@/components/ui/scroll-progress-bar';
 
 export default function RootLayout({
   children,
@@ -101,15 +103,18 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen antialiased bg-background text-foreground transition-colors duration-300">
+        <ScrollProgressBar />
         <MotionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <SmoothScrollProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </SmoothScrollProvider>
         </MotionProvider>
       </body>
     </html>

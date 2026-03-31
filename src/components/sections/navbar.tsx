@@ -31,40 +31,40 @@ export function Navbar() {
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[1200px] z-50 transition-all duration-500 ease-in-out ${
+      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[1200px] z-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         isScrolled
-          ? "py-3 px-6 glass-card shadow-xl border-accent/20"
-          : "py-4 px-8 bg-transparent border-transparent"
-      } rounded-full border`}
+          ? "py-3 px-6 liquid-glass shadow-xl border-accent/20"
+          : "py-5 px-10 bg-transparent border-transparent"
+      } rounded-[2rem] border`}
     >
       <div className="flex items-center justify-between">
-        <Link href="#home" className="flex items-center gap-2 group cursor-pointer">
+        <Link href="#home" className="flex items-center gap-3 group cursor-pointer">
           <motion.div 
-            className="w-8 h-8 rounded-full bg-gradient-to-tr from-accent to-beauty-pink flex items-center justify-center text-white font-display font-bold text-lg"
-            whileHover={{ rotate: 180 }}
-            transition={{ duration: 0.6 }}
+            className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-accent to-beauty-pink flex items-center justify-center text-white font-display font-bold text-xl shadow-lg shadow-accent/20"
+            whileHover={{ rotate: 90, scale: 1.1 }}
+            transition={{ duration: 0.6, ease: "backOut" }}
           >
             L
           </motion.div>
-          <span className="font-display text-2xl font-bold tracking-tighter text-foreground group-hover:text-accent transition-colors">
+          <span className="font-display text-2xl font-black tracking-tighter text-foreground group-hover:text-accent transition-colors duration-300">
             LUXE
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-2">
-          <ul className="flex items-center bg-accent/5 px-2 py-1 rounded-full border border-accent/10">
+        <div className="hidden lg:flex items-center gap-8">
+          <ul className="flex items-center gap-2">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 rounded-full hover:bg-accent/10 group overflow-hidden"
+                  className="relative px-5 py-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-all duration-300 rounded-full hover:bg-accent/5 group overflow-hidden cursor-pointer"
                 >
                   <span className="relative z-10">{link.label}</span>
                   <motion.span 
-                    className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity"
-                    layoutId="nav-hover"
+                    className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent group-hover:w-1/2 transition-all duration-300"
+                    layoutId="nav-underline"
                   />
                 </Link>
               </li>
@@ -72,14 +72,14 @@ export function Navbar() {
           </ul>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <div className="hidden sm:block">
             <ThemeToggle />
           </div>
           
           <Link 
             href="#contact" 
-            className="hidden md:flex h-10 items-center justify-center bg-foreground text-background px-6 rounded-full font-semibold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity cursor-pointer shadow-lg shadow-foreground/10"
+            className="hidden md:flex h-12 items-center justify-center bg-foreground text-background dark:bg-white dark:text-black px-8 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:bg-accent hover:text-white transition-all duration-500 cursor-pointer shadow-xl shadow-foreground/5"
           >
             Book Now
           </Link>

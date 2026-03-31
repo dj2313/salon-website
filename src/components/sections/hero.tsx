@@ -1,11 +1,13 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Particles } from "@/components/animations/particles"
-import { AuroraBackground } from "@/components/animations/aurora-bg"
-import { OrganicShapes } from "@/components/animations/organic-shapes"
 import { useParallax } from "@/hooks/use-parallax"
+
+const Particles = dynamic(() => import("@/components/animations/particles").then(mod => mod.Particles), { ssr: false })
+const AuroraBackground = dynamic(() => import("@/components/animations/aurora-bg").then(mod => mod.AuroraBackground), { ssr: false })
+const OrganicShapes = dynamic(() => import("@/components/animations/organic-shapes").then(mod => mod.OrganicShapes), { ssr: false })
 
 export function Hero() {
   const parallaxOffset = useParallax(-0.3)
@@ -14,7 +16,7 @@ export function Hero() {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Multiple background layers for depth */}
       <motion.div
-        style={{ y: parallaxOffset }}
+        style={{ y: parallaxOffset, willChange: "transform" }}
         className="absolute inset-0 bg-gradient-to-br from-background via-muted/50 to-background dark:from-black dark:via-zinc-900 dark:to-zinc-950"
       />
 
@@ -35,23 +37,24 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.3 }}
           className="space-y-8"
         >
-          {/* Elegant tag */}
-          <motion.p
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+          {/* Elegant tag / Glass Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-accent font-medium text-sm md:text-base uppercase tracking-[0.4em] mb-6"
+            className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md shadow-elegant mb-2"
           >
-            Premium Beauty Studio
-          </motion.p>
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <span className="text-accent font-medium text-xs md:text-sm uppercase tracking-[0.4em]">Premium Beauty Studio</span>
+          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="font-display text-7xl md:text-8xl lg:text-[10vw] xl:text-[12vw] font-bold leading-none mb-8 tracking-tighter"
+            className="font-display text-7xl md:text-8xl lg:text-[10vw] xl:text-[12vw] font-bold leading-none mb-4 tracking-tighter"
           >
-            <span className="inline-block bg-gradient-to-tr from-foreground via-accent to-beauty-pink bg-clip-text text-transparent">LUXE</span>
+            <span className="inline-block bg-gradient-to-tr from-foreground via-accent to-beauty-pink bg-clip-text text-transparent drop-shadow-sm">LUXE</span>
           </motion.h1>
 
           {/* Subtitle with better typography */}
@@ -59,13 +62,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="space-y-4"
+            className="mb-8"
           >
-            <p className="text-3xl md:text-4xl lg:text-5xl font-light tracking-wide text-muted-foreground">
-              Where Beauty Meets
-            </p>
-            <p className="text-3xl md:text-4xl lg:text-5xl font-light tracking-wide text-accent">
-              Excellence
+            <p className="text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-foreground/90 font-display">
+              Where Beauty Meets <span className="text-gradient-gold italic pr-2">Excellence</span>
             </p>
           </motion.div>
 
@@ -74,7 +74,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto text-muted-foreground/80 leading-relaxed font-light"
+            className="text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto text-muted-foreground/90 leading-relaxed font-light mb-12"
           >
             Experience premium hair and beauty services in an atmosphere of
             sophistication and luxury. Where artistry meets innovation.
@@ -85,19 +85,26 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="pt-8"
+            className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-4"
           >
             <Link
               href="#contact"
-              className="group relative inline-block overflow-hidden bg-gradient-to-r from-accent to-beauty-pink text-white px-16 py-5 rounded-full font-medium text-lg transition-all duration-500 hover:shadow-[0_0_30px_rgba(202,138,4,0.5)] hover:scale-105"
+              className="btn-gold-luxe px-12 py-4 rounded-full font-medium text-lg min-w-[240px]"
             >
-              <span className="relative z-10">Book Your Experience</span>
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.6 }}
-              />
+              Book Your Experience
+            </Link>
+            <Link
+              href="#services"
+              className="group flex items-center gap-3 text-foreground/80 hover:text-accent font-medium text-sm md:text-base uppercase tracking-[0.2em] transition-colors duration-300"
+            >
+              Explore Services
+              <motion.span
+                className="inline-block"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.3 }}
+              >
+                →
+              </motion.span>
             </Link>
           </motion.div>
         </motion.div>

@@ -111,13 +111,13 @@
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --muted-foreground: oklch(0.75 0 0);
+  --accent: oklch(0.7 0.17 84.76);
+  --accent-foreground: oklch(0.12 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.7 0.17 84.76);
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
@@ -143,13 +143,17 @@
     overflow-x: hidden;
   }
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; // Disabled for Lenis */
   }
 }
 
 @layer components {
   .section-container {
     @apply container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+  
+  .will-change-transform {
+    will-change: transform;
   }
 
   .section-header {
@@ -184,10 +188,21 @@
   /* Modern Button Styles */
   .btn-gradient {
     @apply bg-gradient-to-r from-accent to-beauty-pink hover:from-accent/90 hover:to-beauty-pink/90 transition-all duration-500;
+    will-change: transform, opacity;
   }
 
   .btn-gradient-gold {
     @apply bg-gradient-to-r from-accent to-gold-light hover:shadow-[0_0_30px_rgba(202,138,4,0.5)] transition-all duration-500;
+    will-change: transform, box-shadow;
+  }
+
+  .btn-gold-luxe {
+    @apply relative overflow-hidden bg-gradient-to-r from-accent via-gold-light to-accent bg-[length:200%_auto] text-white hover:bg-right transition-all duration-500 shadow-gold;
+    will-change: background-position, transform, box-shadow;
+  }
+
+  .input-minimalist {
+    @apply w-full bg-transparent border-0 border-b-2 border-border/50 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-0 focus:border-accent transition-all duration-300 py-3 px-1;
   }
 
   /* Glass Morphism */
@@ -203,7 +218,12 @@
     @apply bg-background/60 backdrop-blur-2xl border border-border/50 shadow-xl rounded-3xl dark:bg-card/40 dark:border-white/10;
   }
 
-  /* Modern Shadows */
+  /* Modern Shadows - UI/UX Pro Max Sync */
+  .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  .shadow-md { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  .shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+  .shadow-xl { box-shadow: 0 20px 25px rgba(0,0,0,0.15); }
+
   .shadow-gold {
     box-shadow: 0 8px 32px 0 rgba(202, 138, 4, 0.25);
   }
@@ -217,15 +237,33 @@
   }
 
   .shadow-elegant {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 8px 32px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05), 0 12px 24px rgba(0, 0, 0, 0.05);
   }
 
-  /* Modern Card Styles */
-  .card-modern {
-    @apply bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-8 transition-all duration-500 hover:-translate-y-2 dark:bg-card/40;
+  /* Liquid Glass Effects - Enhanced Premium */
+  .liquid-glass {
+    @apply bg-white/60 dark:bg-zinc-900/60 backdrop-blur-2xl border border-white/20 dark:border-white/10;
+    transition: all 600ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .card-modern:hover {
-    box-shadow: 0 8px 32px 0 rgba(202, 138, 4, 0.15), 0 16px 64px 0 rgba(236, 72, 153, 0.1);
+
+  .liquid-glass:hover {
+    @apply -translate-y-3 border-accent/30 bg-white/80 dark:bg-zinc-800/80;
+    box-shadow: 0 40px 80px -20px rgba(202, 138, 4, 0.15), 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Modern Card Styles - Premium Editorial */
+  .card-modern {
+    @apply bg-white/60 dark:bg-zinc-900/60 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-[3rem] p-10 cursor-pointer overflow-hidden relative;
+    will-change: transform, box-shadow, background;
+  }
+  
+  .card-modern::after {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-700 pointer-events-none;
+  }
+
+  .card-modern:hover::after {
+    @apply opacity-100;
   }
 
   .card-glass {

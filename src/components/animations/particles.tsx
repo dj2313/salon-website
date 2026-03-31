@@ -14,11 +14,11 @@ export function Particles() {
   ]
 
   const [particles] = useState(() => {
-    return Array.from({ length: 30 }, (_, i) => {
-      const size = Math.random() * 4 + 2;
+    return Array.from({ length: 15 }, (_, i) => { // Reduced count for performance
+      const size = Math.random() * 3 + 2;
       const color = particleColors[Math.floor(Math.random() * particleColors.length)];
       const delay = Math.random() * 5;
-      const duration = Math.random() * 8 + 12;
+      const duration = Math.random() * 10 + 10;
       const left = `${Math.random() * 100}%`;
       const top = `${Math.random() * 100}%`;
       return { i, size, color, delay, duration, left, top };
@@ -37,13 +37,12 @@ export function Particles() {
             background: color,
             left,
             top,
-            filter: "blur(1px)",
+            willChange: "transform, opacity",
           }}
-          initial={{ opacity: 0, y: 0, rotate: 0 }}
+          initial={{ opacity: 0, y: 0 }}
           animate={{
-            opacity: [0, 1, 1, 0],
-            y: -(typeof window !== "undefined" ? window.innerHeight + 100 : 0),
-            rotate: 360,
+            opacity: [0, 0.4, 0.4, 0],
+            y: -800,
           }}
           transition={{
             duration,

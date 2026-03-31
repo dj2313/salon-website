@@ -17,7 +17,6 @@ const iconMap: Record<string, any> = {
 export function Services() {
   const { scrollYProgress } = useScroll();
   const xTranslate = useTransform(scrollYProgress, [0.1, 0.5], [200, -400]);
-  const opacityHeader = useTransform(scrollYProgress, [0, 0.2], [1, 0.2]);
 
   return (
     <section id="services" className="py-32 md:py-48 bg-background dark:bg-black relative overflow-hidden transition-colors duration-1000">
@@ -35,7 +34,7 @@ export function Services() {
 
       <div className="section-container relative z-10">
         <ScrollReveal>
-          <motion.div style={{ opacity: opacityHeader }} className="section-header !mb-32 text-left md:text-center">
+          <div className="section-header !mb-32 text-left md:text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -51,7 +50,7 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="section-title !text-left md:!text-center lg:text-7xl xl:text-8xl text-foreground dark:text-foreground"
+              className="section-title !text-left md:!text-center lg:text-7xl xl:text-8xl text-foreground dark:text-white"
             >
               Our Masterful
               <br />
@@ -67,7 +66,7 @@ export function Services() {
             >
               Discover a sanctuary where innovation meets relaxation. Our bespoke services are designed to enhance your natural beauty while providing a moment of profound tranquility.
             </motion.p>
-          </motion.div>
+          </div>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
@@ -87,7 +86,7 @@ export function Services() {
                     <div className="p-4 rounded-2xl bg-accent/5 border border-accent/10 group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-500 group-hover:animate-float">
                       <Icon aria-hidden="true" className="w-7 h-7 text-accent group-hover:scale-110 transition-transform duration-500" strokeWidth={1.2} />
                     </div>
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-foreground font-semibold group-hover:text-accent group-hover:tracking-[0.35em] transition-all duration-500">
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-foreground dark:text-white/70 font-semibold group-hover:text-accent group-hover:tracking-[0.35em] transition-all duration-500">
                       {service.category}
                     </span>
                   </div>
@@ -97,7 +96,7 @@ export function Services() {
                     <h3 className="font-display text-4xl font-semibold text-foreground dark:text-white leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-muted-foreground/80 font-light leading-relaxed text-lg line-clamp-3 group-hover:text-muted-foreground transition-colors duration-500">
+                    <p className="text-muted-foreground font-light leading-relaxed text-lg line-clamp-3 group-hover:text-foreground/70 transition-colors duration-500">
                       {service.description}
                     </p>
                   </div>
@@ -105,7 +104,7 @@ export function Services() {
                   {/* Footer */}
                   <div className="mt-auto pt-12 flex items-end justify-between relative z-10">
                     <div className="space-y-1">
-                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground/40 font-bold">Investment</span>
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground/70 font-bold">Investment</span>
                       <p className="font-display text-3xl font-bold tracking-tight text-accent">
                         {service.price}
                       </p>
@@ -132,9 +131,9 @@ export function Services() {
 
         {/* Improved Feature Highlights Grid */}
         <ScrollReveal delay={0.3}>
-          <div className="mt-32 md:mt-48 relative p-12 md:p-16 rounded-[4rem] overflow-hidden border border-white/10 shadow-2xl">
+          <div className="mt-32 md:mt-48 relative p-12 md:p-16 rounded-[4rem] overflow-hidden border border-white/10 dark:border-white/[0.08] shadow-2xl dark:bg-white/[0.03]">
             {/* Background Texture */}
-            <div className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.01] backdrop-blur-3xl animate-pulse-soft" />
+            <div className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.02] backdrop-blur-3xl" />
 
             <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
               {[
@@ -151,7 +150,7 @@ export function Services() {
                     <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent">
                       {feature.label}
                     </h4>
-                    <p className="text-muted-foreground/60 text-xs font-light">
+                    <p className="text-muted-foreground text-xs font-light">
                       {feature.value}
                     </p>
                   </div>

@@ -1,16 +1,27 @@
 "use client"
 
 import NextImage from "next/image"
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { stats } from "@/lib/constants"
 
 export function About() {
+  const { scrollYProgress } = useScroll();
+  const xTranslate = useTransform(scrollYProgress, [0, 1], [-200, 200]);
+
   return (
     <section id="about" className="py-32 bg-background relative overflow-hidden">
+      {/* Immersive background text */}
+      <motion.div
+        style={{ x: xTranslate }}
+        className="absolute bottom-1/4 left-0 text-[12rem] font-bold text-foreground/[0.02] dark:text-white/[0.01] whitespace-nowrap pointer-events-none select-none tracking-widest font-display"
+      >
+        HERITAGE ARTISTRY QUALITY
+      </motion.div>
+
       {/* Background decorative elements */}
-      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-accent/5 blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-beauty-pink/5 blur-3xl" />
+      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-beauty-pink/5 blur-3xl pointer-events-none" />
 
       <div className="section-container">
         <ScrollReveal>
@@ -49,6 +60,7 @@ export function About() {
                 alt="LUXE Salon Interior"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
@@ -59,7 +71,7 @@ export function About() {
                   transition={{ delay: 0.5 }}
                 >
                   <p className="text-sm font-medium tracking-[0.3em] mb-3 text-accent">ELEGANCE REDEFINED</p>
-                  <h4 className="text-3xl font-display font-semibold mb-2 text-white">Our Sanctuary</h4>
+                  <h3 className="text-3xl font-display font-semibold mb-2 text-white">Our Sanctuary</h3>
                   <p className="text-sm text-white/70 max-w-xs">A space designed for your ultimate comfort and transformation.</p>
                 </motion.div>
               </div>
@@ -81,9 +93,9 @@ export function About() {
                 viewport={{ once: true }}
                 className="inline-block"
               >
-                <h3 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+                <h4 className="font-display text-4xl md:text-5xl font-semibold mb-6">
                   Our Philosophy
-                </h3>
+                </h4>
                 <div className="w-20 h-1 bg-gradient-to-r from-accent to-beauty-pink rounded-full" />
               </motion.div>
 

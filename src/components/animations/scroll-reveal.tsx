@@ -24,17 +24,19 @@ export function ScrollReveal({
   const directionVariants: Variants = {
     hidden: {
       opacity: 0,
-      x: direction === "left" ? -60 : direction === "right" ? 60 : 0,
-      y: direction === "up" ? 60 : direction === "down" ? -60 : 0,
+      x: direction === "left" ? -40 : direction === "right" ? 40 : 0,
+      y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
+      filter: "blur(4px)",
     },
     visible: {
       opacity: 1,
       y: 0,
       x: 0,
+      filter: "blur(0px)",
       transition: {
         duration,
         delay,
-        ease: "easeOut",
+        ease: [0.22, 1, 0.36, 1], // Premium easing
       },
     },
   }
