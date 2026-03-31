@@ -51,11 +51,11 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="section-title !text-left md:!text-center lg:text-7xl xl:text-8xl"
+              className="section-title !text-left md:!text-center lg:text-7xl xl:text-8xl text-foreground dark:text-foreground"
             >
               Our Masterful
               <br />
-              <span className="text-gradient-aurora italic font-light">Artistry & Care</span>
+              <span className="text-gradient-aurora italic font-bold">Artistry & Care</span>
             </motion.h2>
 
             <motion.p
@@ -81,7 +81,7 @@ export function Services() {
                 >
                   {/* Subtle Gradient Glow Background */}
                   <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                  
+
                   {/* Category & Icon */}
                   <div className="flex justify-between items-start mb-12 relative z-10">
                     <div className="p-4 rounded-2xl bg-accent/5 border border-accent/10 group-hover:bg-accent/10 group-hover:border-accent/30 transition-all duration-500 group-hover:animate-float">
@@ -121,7 +121,7 @@ export function Services() {
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
-                  
+
                   {/* Decorative corner accent */}
                   <div className="absolute top-4 right-4 w-12 h-12 border-t border-r border-accent/0 group-hover:border-accent/20 rounded-tr-2xl transition-all duration-700" />
                 </motion.div>
@@ -135,7 +135,7 @@ export function Services() {
           <div className="mt-32 md:mt-48 relative p-12 md:p-16 rounded-[4rem] overflow-hidden border border-white/10 shadow-2xl">
             {/* Background Texture */}
             <div className="absolute inset-0 bg-white/[0.02] dark:bg-white/[0.01] backdrop-blur-3xl animate-pulse-soft" />
-            
+
             <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
               {[
                 { label: "Eco-Friendly Products", icon: Leaf, value: "Sustainable Philosophy" },
